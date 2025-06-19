@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from '@chakra-ui/react'
 
 function App() {
   return (
@@ -6,8 +6,7 @@ function App() {
       <Heading mb={4}>Hola Chakra UI v2 🚀</Heading>
       <Button colorScheme="teal">¡Presióname!</Button>
     </Box>
-  );
+  )
 }
 
-export default App;
-
+export default App
