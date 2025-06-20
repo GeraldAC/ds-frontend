@@ -1,0 +1,59 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createReview,
+  updateReview,
+  deleteReview,
+  getAllReviews,
+  getReviewById,
+} from "@/services/review.service";
+import type { UpdateReviewDto } from "@/schemas/review.schema";
+
+export const useAllReviews = () => {
+  return useQuery({
+    queryKey: ["reviews"],
+    queryFn: getAllReviews,
+  });
+};
+
+export const useReviewById = (id: number) => {
+  return useQuery({
+    queryKey: ["review", id],
+    queryFn: () => getReviewById(id),
+    enabled: !!id,
+  });
+};
+
+export const useCreateReviewMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+    },
+  });
+};
+
+export const useUpdateReviewMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: UpdateReviewDto }) =>
+      updateReview(id, data),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["reviews", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+    },
+  });
+};
+
+export const useDeleteReviewMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+    },
+  });
+};

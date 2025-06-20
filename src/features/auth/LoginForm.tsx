@@ -7,16 +7,18 @@ import {
   VStack,
   Alert,
   AlertIcon,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import type { AxiosError } from "axios";
 import { loginSchema, type LoginFormData } from "@/schemas/auth.schema";
 import { useAuth } from "@/hooks/useAuth";
-import { useLoginMutation } from "@/hooks/useLoginMutation";
+import { useLoginMutation } from "@/hooks/useAuthMutation";
+import { AxiosError } from "axios";
+import { z } from "zod";
 
 export const LoginForm = () => {
   const {
@@ -28,6 +30,7 @@ export const LoginForm = () => {
   });
 
   const { login } = useAuth();
+  const toast = useToast();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
 
@@ -39,14 +42,35 @@ export const LoginForm = () => {
     try {
       const { user, token } = await mutation.mutateAsync(data);
       login(user, token);
+
+      toast({
+        title: "Inicio de sesión exitoso",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
       navigate("/dashboard");
     } catch (error) {
-      const axiosError = error as AxiosError<{ message?: string }>;
-
-      if (axiosError.response?.data?.message) {
-        setServerError(axiosError.response.data.message);
-      } else {
-        setServerError("Ocurrió un error inesperado. Intenta de nuevo.");
+      // Handle AxiosError
+      if (error instanceof AxiosError) {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        if (axiosError.response?.data?.message) {
+          setServerError(axiosError.response.data.message);
+        } else {
+          setServerError("Ocurrió un error en la solicitud. Intenta de nuevo.");
+        }
+      }
+      // Handle ZodError
+      else if (error instanceof z.ZodError) {
+        const errorMessage = error.errors.map((err) => err.message).join(", ");
+        setServerError(`Error de validación: ${errorMessage}`);
+      }
+      // Handle other unexpected errors
+      else {
+        console.error("Error inesperado:", error);
+        const message = error instanceof Error ? error.message : String(error);
+        setServerError(`Error inesperado: ${message}`);
       }
     }
   };
