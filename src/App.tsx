@@ -1,12 +1,20 @@
-import { Box, Button, Heading } from '@chakra-ui/react'
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import AppRoutes from "./routes/AppRoutes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Box textAlign="center" mt={10}>
-      <Heading mb={4}>Hola Chakra UI v2 🚀</Heading>
-      <Button colorScheme="teal">¡Presióname!</Button>
-    </Box>
-  )
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
