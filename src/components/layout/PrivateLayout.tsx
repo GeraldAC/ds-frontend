@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react";
 
-export const PrivateLayout = () => {
+const PrivateLayout = () => {
   return (
     <Flex>
       <Box flex="1" p={4}>
@@ -10,3 +10,5 @@ export const PrivateLayout = () => {
     </Flex>
   );
 };
+
+export default PrivateLayout;
