@@ -1,5 +1,7 @@
+import { ProductListView } from "@/features/products/ProductListView";
+
 const IndexPage = () => {
-  return <div>index</div>;
+  return <ProductListView />;
 };
 
 export default IndexPage;

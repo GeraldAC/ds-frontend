@@ -33,6 +33,12 @@ export const createProductSchema = productSchema.omit({
 });
 export type CreateProductDto = z.infer<typeof createProductSchema>;
 
+export const createProductResponseSchema = productSchema.omit({
+  created_at: true,
+  venture_name: true,
+});
+export type CreateProductResponse = z.infer<typeof createProductResponseSchema>;
+
 // --- Para actualización (PUT) ---
 export const updateProductSchema = createProductSchema.partial();
 export type UpdateProductDto = z.infer<typeof updateProductSchema>;

@@ -5,6 +5,8 @@ import {
   type CreateProductDto,
   type UpdateProductDto,
   productSchema,
+  type CreateProductResponse,
+  createProductResponseSchema,
 } from "@/schemas/product.schema";
 
 // Obtener todos los productos
@@ -22,9 +24,9 @@ export const getProductById = async (id: number): Promise<Product> => {
 // Crear un producto
 export const createProduct = async (
   data: CreateProductDto,
-): Promise<Product> => {
+): Promise<CreateProductResponse> => {
   const response = await api.post("/products", data);
-  return productSchema.parse(response.data);
+  return createProductResponseSchema.parse(response.data);
 };
 
 // Actualizar producto
