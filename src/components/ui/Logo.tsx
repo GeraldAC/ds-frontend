@@ -12,6 +12,7 @@ const Logo = () => {
       alt="Logo"
       h="40px"
       cursor="pointer"
+      rounded={"lg"}
       onClick={() => navigate("/")}
     />
   );

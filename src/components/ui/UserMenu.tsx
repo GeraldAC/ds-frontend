@@ -11,12 +11,25 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { LogOut, LayoutDashboard, LucideStore } from "lucide-react";
 
 const UserMenu = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   if (!user) return null;
+
+  const isInDashboard = location.pathname.startsWith("/dashboard");
+  const menuTarget = isInDashboard ? "/" : "/dashboard";
+  const menuLabel = isInDashboard ? "Tienda" : "Panel de control";
+  const menuIcon = isInDashboard ? (
+    <LucideStore size={16} />
+  ) : (
+    <LayoutDashboard size={16} />
+  );
 
   return (
     <Menu>
@@ -27,6 +40,7 @@ const UserMenu = () => {
         cursor="pointer"
         minW={0}
         rightIcon={<ChevronDownIcon />}
+        aria-label="Opciones de usuario"
       >
         <Avatar
           size="sm"
@@ -36,6 +50,7 @@ const UserMenu = () => {
           color="white"
         />
       </MenuButton>
+
       <MenuList>
         <Box px={4} py={2}>
           <VStack align="start" spacing={0}>
@@ -45,8 +60,20 @@ const UserMenu = () => {
             </Text>
           </VStack>
         </Box>
+
         <MenuDivider />
-        <MenuItem onClick={logout} color="red.500">
+
+        <MenuItem
+          icon={menuIcon}
+          onClick={() => navigate(menuTarget)}
+          color="teal.700"
+        >
+          {menuLabel}
+        </MenuItem>
+
+        <MenuDivider />
+
+        <MenuItem icon={<LogOut size={16} />} onClick={logout} color="red.500">
           Cerrar sesión
         </MenuItem>
       </MenuList>

@@ -3,7 +3,6 @@ import { PublicRoute } from "./PublicRoute";
 import { PrivateRoute } from "./PrivateRoute";
 
 import MainLayout from "@/layouts/MainLayout";
-import DashboardLayout from "@/layouts/DashboardLayout";
 
 import IndexPage from "@/pages/Index";
 import AboutPage from "@/pages/About";
@@ -16,6 +15,8 @@ import Profile from "@/pages/dashboard/Profile";
 import Ventures from "@/pages/dashboard/Ventures";
 import Products from "@/pages/dashboard/Products";
 import Reviews from "@/pages/dashboard/Reviews";
+
+import { DashboardLayout } from "@/layouts/DashboardLayout";
 
 const AppRoutes = () => {
   return (

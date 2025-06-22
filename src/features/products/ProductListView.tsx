@@ -1,5 +1,5 @@
 import { Box, Spinner, Text, SimpleGrid, useToast } from "@chakra-ui/react";
-import { ProductCardHorizontal } from "./ProductCardHorizontal"; // Ajusta la ruta si es necesario
+import { ProductCardHorizontal } from "./ProductCardHorizontal";
 import { useState } from "react";
 import { useProductsQuery } from "@/hooks/useProductMutation";
 import type { Product } from "@/schemas/product.schema";
@@ -47,9 +47,9 @@ export const ProductListView = () => {
   }
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
       {products.map((product) => {
-        const averageRating = Math.random() * 5; // Reemplázalo por el real
+        const averageRating = Math.random() * 5;
         return (
           <ProductCardHorizontal
             key={product.id}
