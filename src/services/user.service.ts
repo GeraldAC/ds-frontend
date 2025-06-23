@@ -1,4 +1,5 @@
 import api from "@/lib/axios";
+import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
 import {
   type User,
   type CreateUserDto,
@@ -29,9 +30,9 @@ export const createUser = async (data: CreateUserDto): Promise<User> => {
 export const updateUser = async (
   id: number,
   data: UpdateUserDto,
-): Promise<User> => {
+): Promise<MessageResponse> => {
   const response = await api.put(`/users/${id}`, data);
-  return userSchema.parse(response.data);
+  return messageSchema.parse(response.data);
 };
 
 // Eliminar usuario

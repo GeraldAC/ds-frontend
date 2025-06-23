@@ -4,6 +4,8 @@ import {
   type CreateProducerDto,
   type UpdateProducerDto,
   producerSchema,
+  type ProducerResponse,
+  ProducerResponseSchema,
 } from "@/schemas/producer.schema";
 import { z } from "zod";
 
@@ -15,16 +17,18 @@ export const getAllProducers = async (): Promise<Producer[]> => {
 
 // Obtener un productor por ID
 export const getProducerById = async (id: number): Promise<Producer> => {
-  const response = await api.get(`/producers/${id}`);
+  const response = await api.get(`/producers/user/${id}`);
   return producerSchema.parse(response.data);
 };
 
 // Crear perfil de productor
 export const createProducer = async (
   data: CreateProducerDto,
-): Promise<Producer> => {
+): Promise<ProducerResponse> => {
+  console.log({ data });
   const response = await api.post("/producers", data);
-  return producerSchema.parse(response.data);
+  console.log(response.data);
+  return ProducerResponseSchema.parse(response.data);
 };
 
 // Actualizar perfil del productor

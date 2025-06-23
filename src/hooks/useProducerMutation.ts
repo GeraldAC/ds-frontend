@@ -17,11 +17,11 @@ export const useProducersQuery = () => {
 };
 
 // Obtener un productor por ID
-export const useProducerQuery = (id: number) => {
+export const useProducerQuery = (id?: number, isProducer?: boolean) => {
   return useQuery({
     queryKey: ["producers", id],
-    queryFn: () => getProducerById(id),
-    enabled: !!id,
+    queryFn: () => getProducerById(id!),
+    enabled: !!id && !!isProducer,
   });
 };
 

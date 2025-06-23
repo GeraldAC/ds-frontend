@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { AuthenticatedUser } from "@/schemas/auth.schema";
 import queryClient from "@/lib/queryClient";
+import { getUserById } from "@/services/user.service";
 
 interface AuthContextType {
   user: AuthenticatedUser | null;
@@ -8,6 +9,7 @@ interface AuthContextType {
   login: (user: AuthenticatedUser, token: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  refreshUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -48,12 +50,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryClient.clear();
   };
 
+  const refreshUser = async () => {
+    if (!user) return;
+    try {
+      const updatedUser = await queryClient.fetchQuery({
+        queryKey: ["users", user.id],
+        queryFn: () => getUserById(user.id),
+      });
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error("Error refreshing user:", error);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     token,
     login,
     logout,
     isAuthenticated: !!user && !!token,
+    refreshUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
