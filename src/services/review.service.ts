@@ -2,10 +2,26 @@ import api from "@/lib/axios";
 import { z } from "zod";
 import {
   reviewSchema,
+  userReviewListSchema,
   type CreateReviewDto,
   type Review,
-  type UpdateReviewDto,
+  type ReviewFormData,
+  type UserReview,
 } from "@/schemas/review.schema";
+import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
+
+// -- Reseñas de usuario
+export const getUserReviews = async (userId: number): Promise<UserReview[]> => {
+  const response = await api.get(`/reviews/user/${userId}`);
+  const parsed = userReviewListSchema.safeParse(response.data);
+
+  if (!parsed.success) {
+    console.error("Invalid response from /reviews/user/:userId", parsed.error);
+    throw new Error("Invalid response format");
+  }
+
+  return parsed.data;
+};
 
 // Obtener todas las reseñas
 export const getAllReviews = async (): Promise<Review[]> => {
@@ -28,13 +44,14 @@ export const createReview = async (data: CreateReviewDto): Promise<Review> => {
 // Actualizar reseña
 export const updateReview = async (
   id: number,
-  data: UpdateReviewDto,
-): Promise<Review> => {
+  data: ReviewFormData,
+): Promise<MessageResponse> => {
   const response = await api.put(`/reviews/${id}`, data);
-  return reviewSchema.parse(response.data);
+  return messageSchema.parse(response.data);
 };
 
 // Eliminar reseña
 export const deleteReview = async (id: number): Promise<void> => {
-  await api.delete(`/reviews/${id}`);
+  const response = api.delete(`/reviews/${id}`);
+  messageSchema.parse(response);
 };

@@ -13,10 +13,10 @@ import {
   GridItem,
   HStack,
 } from "@chakra-ui/react";
+import dayjs from "dayjs";
 import { useAuth } from "@/hooks/useAuth";
 
 import { useDeleteUserMutation, useUserQuery } from "@/hooks/useUserMutation";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { BecomeProducerModal } from "@/features/producers/BecomeProducerModal";
 import { useProducerQuery } from "@/hooks/useProducerMutation";
@@ -173,6 +173,7 @@ const DashboardProfile = () => {
                 }
               : undefined
           }
+          producerId={producerData?.id}
         />
 
         {!userData.is_producer && <BecomeProducerModal />}

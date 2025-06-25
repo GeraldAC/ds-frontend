@@ -31,11 +31,13 @@ import { useUpdateProducerMutation } from "@/hooks/useProducerMutation";
 type Props = {
   defaultUserData: UpdateUserDto;
   defaultProducerData?: UpdateProducerDto;
+  producerId?: number;
 };
 
 export const EditProfileModal = ({
   defaultUserData,
   defaultProducerData,
+  producerId,
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -43,7 +45,8 @@ export const EditProfileModal = ({
 
   const {
     register: registerUser,
-    handleSubmit: handleUserSubmit,
+    getValues: getUserValues,
+    trigger: triggerUser,
     formState: { errors: userErrors, isSubmitting: isSubmittingUser },
     reset: resetUser,
   } = useForm<UpdateUserDto>({
@@ -53,7 +56,8 @@ export const EditProfileModal = ({
 
   const {
     register: registerProducer,
-    handleSubmit: handleProducerSubmit,
+    getValues: getProducerValues,
+    trigger: triggerProducer,
     formState: { errors: producerErrors, isSubmitting: isSubmittingProducer },
     reset: resetProducer,
   } = useForm<UpdateProducerDto>({
@@ -69,20 +73,27 @@ export const EditProfileModal = ({
     if (defaultProducerData) resetProducer(defaultProducerData);
   }, [defaultUserData, defaultProducerData, isOpen, resetProducer, resetUser]);
 
-  const onSubmit = async (userData: UpdateUserDto) => {
+  const onSubmit = async () => {
+    const userData = getUserValues();
+    const producerData = getProducerValues();
+
+    const userIsValid = await triggerUser();
+    const producerIsValid = defaultProducerData
+      ? await triggerProducer()
+      : true;
+
+    console.log({ userIsValid, producerIsValid });
+
+    if (!userIsValid || !producerIsValid) return;
+
     try {
-      await updateUserMutation.mutateAsync({
-        id: user!.id,
-        data: userData,
-      });
+      await updateUserMutation.mutateAsync({ id: user!.id, data: userData });
 
       if (defaultProducerData) {
-        await handleProducerSubmit(async (producerForm) => {
-          await updateProducerMutation.mutateAsync({
-            id: user!.id,
-            data: producerForm,
-          });
-        })();
+        await updateProducerMutation.mutateAsync({
+          id: producerId!,
+          data: producerData,
+        });
       }
 
       await refreshUser();
@@ -94,7 +105,7 @@ export const EditProfileModal = ({
       });
       onClose();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast({
         title: "Error al actualizar.",
         description: "Verifica los campos e intenta nuevamente.",
@@ -113,7 +124,13 @@ export const EditProfileModal = ({
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent as="form" onSubmit={handleUserSubmit(onSubmit)}>
+        <ModalContent
+          as="form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit();
+          }}
+        >
           <ModalHeader>Editar Perfil</ModalHeader>
           <ModalCloseButton />
 

@@ -5,8 +5,17 @@ import {
   deleteReview,
   getAllReviews,
   getReviewById,
+  getUserReviews,
 } from "@/services/review.service";
-import type { UpdateReviewDto } from "@/schemas/review.schema";
+import type { ReviewFormData } from "@/schemas/review.schema";
+
+export const useMyReviewsQuery = (userId?: number) => {
+  return useQuery({
+    queryKey: ["my-reviews", userId],
+    queryFn: () => getUserReviews(userId!),
+    enabled: !!userId,
+  });
+};
 
 export const useAllReviews = () => {
   return useQuery({
@@ -38,7 +47,7 @@ export const useUpdateReviewMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdateReviewDto }) =>
+    mutationFn: ({ id, data }: { id: number; data: ReviewFormData }) =>
       updateReview(id, data),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["reviews", variables.id] });

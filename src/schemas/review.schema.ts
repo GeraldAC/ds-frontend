@@ -27,3 +27,28 @@ export type UpdateReviewDto = z.infer<typeof updateReviewSchema>;
 
 // --- Respuesta ---
 export type Review = z.infer<typeof reviewSchema>;
+
+// -- Dashboard Profile
+export const userReviewWithProductSchema = z.object({
+  id: z.number(),
+  rating: z.number().min(1).max(5),
+  comment: z.string().nullable(),
+  created_at: z.string(),
+  product_id: z.number(),
+  product_name: z.string(),
+  product_image_url: z.string().nullable(),
+});
+
+export const userReviewListSchema = z.array(userReviewWithProductSchema);
+
+export type UserReview = z.infer<typeof userReviewWithProductSchema>;
+
+export const reviewFormSchema = z.object({
+  rating: z
+    .number({ invalid_type_error: "La calificación debe ser un número" })
+    .min(1, "La calificación mínima es 1")
+    .max(5, "La calificación máxima es 5"),
+  comment: z.string().optional(),
+});
+
+export type ReviewFormData = z.infer<typeof reviewFormSchema>;

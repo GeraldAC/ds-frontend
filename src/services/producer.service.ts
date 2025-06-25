@@ -1,4 +1,5 @@
 import api from "@/lib/axios";
+import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
 import {
   type Producer,
   type CreateProducerDto,
@@ -35,9 +36,11 @@ export const createProducer = async (
 export const updateProducer = async (
   id: number,
   data: UpdateProducerDto,
-): Promise<Producer> => {
+): Promise<MessageResponse> => {
+  console.log("Antes", id, data);
   const response = await api.put(`/producers/${id}`, data);
-  return producerSchema.parse(response.data);
+  console.log("Después", response.data);
+  return messageSchema.parse(response.data);
 };
 
 // Eliminar perfil de productor
