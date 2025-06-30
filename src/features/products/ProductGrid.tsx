@@ -1,43 +1,28 @@
-import { SimpleGrid, Spinner, Center, Text, Box } from "@chakra-ui/react";
-import { useProductsQuery } from "@/hooks/useProductMutation";
+import { SimpleGrid, Text, Box } from "@chakra-ui/react";
 import { ProductCard } from "./ProductCard";
+import type { Product } from "@/schemas/product.schema";
 
-export const ProductList = () => {
-  const { data: products, isLoading, isError } = useProductsQuery();
+interface Props {
+  products: Product[];
+  onEdit?: (product: Product) => void;
+  onDelete?: (id: number) => void;
+}
 
-  if (isLoading) {
-    return (
-      <Center minH="50vh">
-        <Spinner size="xl" />
-      </Center>
-    );
-  }
-
-  if (isError || !products) {
-    console.log({ isError, products });
-    return (
-      <Center minH="50vh">
-        <Text color="red.500">Error al cargar los productos</Text>
-      </Center>
-    );
-  }
-
+export const ProductGrid = ({ products, onEdit, onDelete }: Props) => {
   if (products.length === 0) {
-    return (
-      <Center minH="50vh">
-        <Text color="gray.500">No hay productos disponibles</Text>
-      </Center>
-    );
+    return <Text>No hay productos registrados para este emprendimiento.</Text>;
   }
 
   return (
     <Box p={4}>
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 3 }} spacing={6}>
         {products.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
-            averageRating={3} // Aquí asumimos que tienes este campo
+            averageRating={3}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         ))}
       </SimpleGrid>

@@ -45,3 +45,26 @@ export type UpdateProductDto = z.infer<typeof updateProductSchema>;
 
 // --- Respuesta ---
 export type Product = z.infer<typeof productSchema>;
+
+// ------------------------------------------------------------------------------
+export const productFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, "El nombre del producto es muy corto")
+    .max(100, "El nombre debe tener máximo 100 caracteres"),
+  description: z
+    .string()
+    .max(1000, "La descripción es demasiado larga")
+    .optional(),
+  price: z
+    .number({ invalid_type_error: "El precio debe ser un número" })
+    .positive("El precio debe ser mayor a 0"),
+  stock: z
+    .number({ invalid_type_error: "El stock debe ser un número" })
+    .int("El stock debe ser un número entero")
+    .min(0, "El stock no puede ser negativo")
+    .optional(),
+  image_url: z.string().url("Debe ser una URL válida de imagen").optional(),
+});
+
+export type ProductFormData = z.infer<typeof productFormSchema>;

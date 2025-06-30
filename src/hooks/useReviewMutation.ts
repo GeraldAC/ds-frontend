@@ -9,11 +9,11 @@ import {
 } from "@/services/review.service";
 import type { ReviewFormData } from "@/schemas/review.schema";
 
-export const useMyReviewsQuery = (userId?: number) => {
+export const useMyReviewsQuery = (id?: number) => {
   return useQuery({
-    queryKey: ["my-reviews", userId],
-    queryFn: () => getUserReviews(userId!),
-    enabled: !!userId,
+    queryKey: ["reviews", id],
+    queryFn: () => getUserReviews(id!),
+    enabled: !!id,
   });
 };
 

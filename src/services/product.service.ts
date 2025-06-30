@@ -8,6 +8,13 @@ import {
   type CreateProductResponse,
   createProductResponseSchema,
 } from "@/schemas/product.schema";
+import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
+
+export const getProductsByVenture = async (id: number): Promise<Product[]> => {
+  const response = await api.get(`/products/venture/${id}`);
+
+  return z.array(productSchema).parse(response.data);
+};
 
 // Obtener todos los productos
 export const getAllProducts = async (): Promise<Product[]> => {
@@ -33,9 +40,9 @@ export const createProduct = async (
 export const updateProduct = async (
   id: number,
   data: UpdateProductDto,
-): Promise<Product> => {
+): Promise<MessageResponse> => {
   const response = await api.put(`/products/${id}`, data);
-  return productSchema.parse(response.data);
+  return messageSchema.parse(response.data);
 };
 
 // Eliminar producto

@@ -50,7 +50,10 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<Home />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/dashboard/ventures" element={<Ventures />} />
-        <Route path="/dashboard/products" element={<Products />} />
+        <Route
+          path="/dashboard/ventures/:ventureId/products"
+          element={<Products />}
+        />
         <Route path="/dashboard/reviews" element={<Reviews />} />
       </Route>
     </Routes>

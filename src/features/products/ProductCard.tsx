@@ -6,24 +6,26 @@ import {
   Heading,
   HStack,
   Icon,
-  Button,
   Flex,
+  IconButton,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
-import { type FC } from "react";
 import type { Product } from "@/schemas/product.schema";
+import { Edit, Trash2 } from "lucide-react";
 
-interface ProductCardProps {
+interface Props {
   product: Product;
-  averageRating: number; // de 1 a 5
-  onViewDetails?: (product: Product) => void; // Opcional: función que abrirá el modal
+  averageRating: number;
+  onEdit?: (product: Product) => void;
+  onDelete?: (id: number) => void;
 }
 
-export const ProductCard: FC<ProductCardProps> = ({
+export const ProductCard = ({
   product,
   averageRating,
-  onViewDetails,
-}) => {
+  onEdit,
+  onDelete,
+}: Props) => {
   return (
     <Box
       borderWidth="1px"
@@ -32,9 +34,9 @@ export const ProductCard: FC<ProductCardProps> = ({
       boxShadow="md"
       _hover={{ boxShadow: "xl" }}
       bg="white"
-      maxW="sm"
+      maxW={"xl"}
       w="100%"
-      h="100%" // Para que todas tengan la misma altura en una grid
+      h="100%"
       display="flex"
       flexDirection="column"
     >
@@ -50,11 +52,7 @@ export const ProductCard: FC<ProductCardProps> = ({
 
       <Flex direction="column" flex="1" p={4} justify="space-between">
         <Stack spacing={3} flex="1">
-          <Heading
-            size="md"
-            noOfLines={2}
-            minH="3.5rem" // Aproximadamente 2 líneas en tamaño md
-          >
+          <Heading size="md" noOfLines={2} minH="3.5rem">
             {product.name}
           </Heading>
 
@@ -89,16 +87,27 @@ export const ProductCard: FC<ProductCardProps> = ({
           </HStack>
         </Stack>
 
-        <Box mt={4}>
-          <Button
-            colorScheme="blue"
-            size="sm"
-            w="full"
-            onClick={() => onViewDetails?.(product)}
-          >
-            Ver más
-          </Button>
-        </Box>
+        <HStack justifyContent="flex-end" mt={4} spacing={2}>
+          {onEdit && (
+            <IconButton
+              aria-label="Editar producto"
+              icon={<Edit size={18} />}
+              size="sm"
+              variant="outline"
+              onClick={() => onEdit(product)}
+            />
+          )}
+          {onDelete && (
+            <IconButton
+              aria-label="Eliminar producto"
+              icon={<Trash2 size={18} />}
+              size="sm"
+              colorScheme="red"
+              variant="outline"
+              onClick={() => onDelete(product.id)}
+            />
+          )}
+        </HStack>
       </Flex>
     </Box>
   );

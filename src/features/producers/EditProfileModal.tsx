@@ -82,8 +82,6 @@ export const EditProfileModal = ({
       ? await triggerProducer()
       : true;
 
-    console.log({ userIsValid, producerIsValid });
-
     if (!userIsValid || !producerIsValid) return;
 
     try {

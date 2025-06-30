@@ -1,12 +1,41 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   getAllProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductsByVenture,
 } from "@/services/product.service";
 import { type UpdateProductDto } from "@/schemas/product.schema";
+import type { VentureByProducer } from "@/schemas/venture.schema";
+
+export const useProductsByVentures = (
+  ventures: VentureByProducer[] | undefined,
+  enabled: boolean = true,
+) => {
+  const queries = useQueries({
+    queries: (ventures ?? []).map((venture) => ({
+      queryKey: ["products", venture.id],
+      queryFn: () => getProductsByVenture(venture.id),
+      enabled,
+      staleTime: 5 * 60 * 1000,
+    })),
+  });
+
+  return queries;
+};
+
+export const useProductsByVenture = (id: number) =>
+  useQuery({
+    queryKey: ["products", id],
+    queryFn: () => getProductsByVenture(id),
+  });
 
 // Obtener todos
 export const useProductsQuery = () => {

@@ -18,7 +18,7 @@ import {
 } from "@/hooks/useReviewMutation";
 import type { ReviewFormData, UserReview } from "@/schemas/review.schema";
 
-const DashboardReview = () => {
+const Reviews = () => {
   const { user } = useAuth();
   const toast = useToast();
 
@@ -123,4 +123,4 @@ const DashboardReview = () => {
   );
 };
 
-export default DashboardReview;
+export default Reviews;

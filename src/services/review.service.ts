@@ -51,7 +51,7 @@ export const updateReview = async (
 };
 
 // Eliminar reseña
-export const deleteReview = async (id: number): Promise<void> => {
-  const response = api.delete(`/reviews/${id}`);
-  messageSchema.parse(response);
+export const deleteReview = async (id: number): Promise<MessageResponse> => {
+  const response = await api.delete(`/reviews/${id}`);
+  return messageSchema.parse(response.data);
 };

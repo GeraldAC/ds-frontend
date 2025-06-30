@@ -43,7 +43,7 @@ export const navItems: NavItem[] = [
     label: "Mis productos",
     path: "/dashboard/products",
     icon: Box,
-    isVisible: (isProducer) => isProducer,
+    isVisible: (isProducer) => isProducer && false,
     exact: false,
   },
 ];

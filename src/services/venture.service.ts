@@ -1,11 +1,20 @@
+import { z } from "zod";
 import api from "@/lib/axios";
 import {
   type Venture,
-  type CreateVentureDto,
-  type UpdateVentureDto,
   ventureSchema,
+  venturesByProducerSchema,
+  type VenturesByProducer,
+  type VentureFormData,
+  type VentureResponse,
+  ventureResponseSchema,
 } from "@/schemas/venture.schema";
-import { z } from "zod";
+import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
+
+export const getVenturesByProducer = async (): Promise<VenturesByProducer> => {
+  const response = await api.get("/ventures/producer");
+  return venturesByProducerSchema.parse(response.data);
+};
 
 // Obtener todos los ventures
 export const getAllVentures = async (): Promise<Venture[]> => {
@@ -21,19 +30,19 @@ export const getVentureById = async (id: number): Promise<Venture> => {
 
 // Crear un venture
 export const createVenture = async (
-  data: CreateVentureDto,
-): Promise<Venture> => {
+  data: VentureFormData,
+): Promise<VentureResponse> => {
   const response = await api.post("/ventures", data);
-  return ventureSchema.parse(response.data);
+  return ventureResponseSchema.parse(response.data);
 };
 
 // Actualizar un venture
 export const updateVenture = async (
   id: number,
-  data: UpdateVentureDto,
-): Promise<Venture> => {
+  data: VentureFormData,
+): Promise<MessageResponse> => {
   const response = await api.put(`/ventures/${id}`, data);
-  return ventureSchema.parse(response.data);
+  return messageSchema.parse(response.data);
 };
 
 // Eliminar un venture
