@@ -9,7 +9,16 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <Box as="header" bg="white" boxShadow="md" px={6} py={3}>
+    <Box
+      as="header"
+      bg="white"
+      boxShadow="md"
+      px={6}
+      py={3}
+      position="sticky"
+      top={0}
+      zIndex={1000}
+    >
       <Flex align="center">
         <Logo />
 

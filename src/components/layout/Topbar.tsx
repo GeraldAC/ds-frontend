@@ -18,7 +18,7 @@ export const Topbar = () => {
       borderBottom="1px solid"
       borderColor="gray.300"
       boxShadow="md"
-      zIndex="110"
+      zIndex={1000}
       transition="left 0.3s ease"
     >
       <Flex h="100%" align="center" justify="space-between" px={6}>

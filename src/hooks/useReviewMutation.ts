@@ -6,8 +6,17 @@ import {
   getAllReviews,
   getReviewById,
   getUserReviews,
+  fetchAverageRating,
 } from "@/services/review.service";
-import type { ReviewFormData } from "@/schemas/review.schema";
+import type { AverageRating, ReviewFormData } from "@/schemas/review.schema";
+
+export const useAverageRating = (productId: number) => {
+  return useQuery<AverageRating>({
+    queryKey: ["averageRating", productId],
+    queryFn: () => fetchAverageRating(productId),
+    enabled: !!productId,
+  });
+};
 
 export const useMyReviewsQuery = (id?: number) => {
   return useQuery({
@@ -39,6 +48,7 @@ export const useCreateReviewMutation = () => {
     mutationFn: createReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["productDetails"] });
     },
   });
 };
@@ -52,6 +62,7 @@ export const useUpdateReviewMutation = () => {
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["reviews", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["productDetails"] });
     },
   });
 };
@@ -63,6 +74,7 @@ export const useDeleteReviewMutation = () => {
     mutationFn: deleteReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["productDetails"] });
     },
   });
 };

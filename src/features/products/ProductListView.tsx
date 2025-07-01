@@ -1,14 +1,28 @@
-import { Box, Spinner, Text, SimpleGrid, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Spinner,
+  Text,
+  SimpleGrid,
+  useToast,
+  Input,
+  VStack,
+  InputGroup,
+  InputLeftElement,
+  Icon,
+} from "@chakra-ui/react";
 import { ProductCardHorizontal } from "./ProductCardHorizontal";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useProductsQuery } from "@/hooks/useProductMutation";
 import type { Product } from "@/schemas/product.schema";
+import { ProductDetailsModal } from "../home/ProductDetailsModal";
+import queryClient from "@/lib/queryClient";
+import { SearchIcon } from "lucide-react";
 
 export const ProductListView = () => {
   const toast = useToast();
   const { data: products, isLoading, isError } = useProductsQuery();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  void selectedProduct;
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleViewDetails = (product: Product) => {
     setSelectedProduct(product);
@@ -20,6 +34,18 @@ export const ProductListView = () => {
       isClosable: true,
     });
   };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    queryClient.invalidateQueries({ queryKey: ["averageRating"] });
+  };
+
+  const filteredProducts = useMemo(() => {
+    if (!products) return [];
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [products, searchQuery]);
 
   if (isLoading) {
     return (
@@ -38,27 +64,50 @@ export const ProductListView = () => {
     );
   }
 
-  if (products.length === 0) {
-    return (
-      <Box textAlign="center" mt={10}>
-        <Text color="gray.600">No hay productos disponibles.</Text>
-      </Box>
-    );
-  }
-
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-      {products.map((product) => {
-        const averageRating = Math.random() * 5;
-        return (
-          <ProductCardHorizontal
-            key={product.id}
-            product={product}
-            averageRating={averageRating}
-            onViewDetails={handleViewDetails}
+    <>
+      <VStack spacing={6} mt={4}>
+        <InputGroup maxW="450px" mx="auto">
+          <InputLeftElement pointerEvents="none">
+            <Icon as={SearchIcon} color="gray.500" boxSize={5} />
+          </InputLeftElement>
+          <Input
+            placeholder="Buscar productos..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            bg="white"
+            borderRadius="full"
+            boxShadow="md"
+            _focus={{
+              borderColor: "teal.800",
+              boxShadow: "0 0 0 2px rgba(56, 178, 172, 0.4)",
+            }}
+            _placeholder={{ color: "gray.400" }}
           />
-        );
-      })}
-    </SimpleGrid>
+        </InputGroup>
+
+        {filteredProducts.length === 0 ? (
+          <Text color="gray.600">No se encontraron productos.</Text>
+        ) : (
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} w="full">
+            {filteredProducts.map((product) => (
+              <ProductCardHorizontal
+                key={product.id}
+                product={product}
+                onViewDetails={handleViewDetails}
+              />
+            ))}
+          </SimpleGrid>
+        )}
+      </VStack>
+
+      {selectedProduct && (
+        <ProductDetailsModal
+          productId={selectedProduct.id}
+          isOpen={!!selectedProduct}
+          onClose={handleCloseModal}
+        />
+      )}
+    </>
   );
 };

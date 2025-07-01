@@ -9,6 +9,16 @@ import {
   createProductResponseSchema,
 } from "@/schemas/product.schema";
 import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
+import type { ProductDetailsResponse } from "@/types";
+
+export const getProductDetails = async (
+  id: number,
+): Promise<ProductDetailsResponse> => {
+  const response = await api.get<ProductDetailsResponse>(
+    `/products/${id}/details`,
+  );
+  return response.data;
+};
 
 export const getProductsByVenture = async (id: number): Promise<Product[]> => {
   const response = await api.get(`/products/venture/${id}`);

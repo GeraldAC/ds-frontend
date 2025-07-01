@@ -1,14 +1,22 @@
 import api from "@/lib/axios";
 import { z } from "zod";
 import {
+  averageRatingSchema,
+  reviewFormSchema,
   reviewSchema,
   userReviewListSchema,
   type CreateReviewDto,
   type Review,
   type ReviewFormData,
+  type ReviewResponse,
   type UserReview,
 } from "@/schemas/review.schema";
 import { messageSchema, type MessageResponse } from "@/schemas/common.schema";
+
+export const fetchAverageRating = async (productId: number) => {
+  const response = await api.get(`/reviews/average/${productId}`);
+  return averageRatingSchema.parse(response.data);
+};
 
 // -- Reseñas de usuario
 export const getUserReviews = async (userId: number): Promise<UserReview[]> => {
@@ -36,9 +44,12 @@ export const getReviewById = async (id: number): Promise<Review> => {
 };
 
 // Crear una nueva reseña
-export const createReview = async (data: CreateReviewDto): Promise<Review> => {
+export const createReview = async (
+  data: CreateReviewDto,
+): Promise<ReviewResponse> => {
   const response = await api.post("/reviews", data);
-  return reviewSchema.parse(response.data);
+
+  return reviewFormSchema.parse(response.data);
 };
 
 // Actualizar reseña

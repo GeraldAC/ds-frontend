@@ -11,9 +11,18 @@ import {
   updateProduct,
   deleteProduct,
   getProductsByVenture,
+  getProductDetails,
 } from "@/services/product.service";
 import { type UpdateProductDto } from "@/schemas/product.schema";
 import type { VentureByProducer } from "@/schemas/venture.schema";
+
+export const useProductDetails = (productId: number) => {
+  return useQuery({
+    queryKey: ["productDetails", productId],
+    queryFn: () => getProductDetails(productId),
+    enabled: !!productId,
+  });
+};
 
 export const useProductsByVentures = (
   ventures: VentureByProducer[] | undefined,

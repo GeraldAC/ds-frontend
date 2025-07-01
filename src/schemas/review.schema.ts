@@ -18,6 +18,7 @@ export const createReviewSchema = reviewSchema.omit({
   created_at: true,
   product_name: true,
   user_name: true,
+  user_id: true,
 });
 export type CreateReviewDto = z.infer<typeof createReviewSchema>;
 
@@ -52,3 +53,19 @@ export const reviewFormSchema = z.object({
 });
 
 export type ReviewFormData = z.infer<typeof reviewFormSchema>;
+
+export const reviewResponseSchema = z.object({
+  id: z.number(),
+  product_id: z.number(),
+  user_id: z.number(),
+  rating: z.number().min(1).max(5),
+  comment: z.string().nullable(),
+});
+
+export type ReviewResponse = z.infer<typeof reviewFormSchema>;
+
+export const averageRatingSchema = z.object({
+  average: z.number().min(0).max(5),
+});
+
+export type AverageRating = z.infer<typeof averageRatingSchema>;

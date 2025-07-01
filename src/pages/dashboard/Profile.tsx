@@ -81,6 +81,7 @@ const DashboardProfile = () => {
       borderWidth="1px"
       borderRadius="lg"
       boxShadow="md"
+      bg={"white"}
     >
       <Flex
         direction={{ base: "column", md: "row" }}

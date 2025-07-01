@@ -28,6 +28,7 @@ const LayoutStructure = () => {
         flex="1"
         ml={isCollapsed ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded}
         transition="margin-left 0.3s ease"
+        bg={"gray.50"}
       >
         <Topbar />
 

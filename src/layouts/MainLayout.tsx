@@ -9,7 +9,14 @@ const MainLayout = () => {
     <Box minH="100vh" display="flex" flexDirection="column">
       <Header />
 
-      <Box as="main" flex="1" w="100%" px={{ base: 4, md: 8 }} py={6}>
+      <Box
+        as="main"
+        flex="1"
+        w="100%"
+        px={{ base: 4, md: 8 }}
+        py={6}
+        bg={"gray.50"}
+      >
         <Outlet />
       </Box>
 

@@ -12,18 +12,20 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 import { type FC } from "react";
 import type { Product } from "@/schemas/product.schema";
+import { useAverageRating } from "@/hooks/useReviewMutation";
 
 interface ProductCardHorizontalProps {
   product: Product;
-  averageRating: number;
   onViewDetails?: (product: Product) => void;
 }
 
 export const ProductCardHorizontal: FC<ProductCardHorizontalProps> = ({
   product,
-  averageRating,
   onViewDetails,
 }) => {
+  const { data, isPending } = useAverageRating(product.id);
+  const averageRating = data?.average;
+
   return (
     <Flex
       borderWidth="1px"
@@ -64,18 +66,26 @@ export const ProductCardHorizontal: FC<ProductCardHorizontalProps> = ({
         {/* Valoración + grupo precio + botón: parte inferior fija */}
         <Box mt={4}>
           <HStack spacing={1} mb={2}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Icon
-                key={i}
-                as={StarIcon}
-                color={
-                  i < Math.round(averageRating) ? "yellow.400" : "gray.300"
-                }
-              />
-            ))}
-            <Text fontSize="sm" color="gray.500">
-              ({averageRating.toFixed(1)})
-            </Text>
+            {isPending ? (
+              "Cargando..."
+            ) : (
+              <>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Icon
+                    key={i}
+                    as={StarIcon}
+                    color={
+                      i < Math.round(averageRating ?? 0)
+                        ? "yellow.400"
+                        : "gray.300"
+                    }
+                  />
+                ))}
+                <Text fontSize="sm" color="gray.500">
+                  ({averageRating?.toFixed(1)})
+                </Text>
+              </>
+            )}
           </HStack>
 
           <HStack justify="space-between">
