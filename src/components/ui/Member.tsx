@@ -19,7 +19,7 @@ type MemberProps = {
   member: {
     name: string;
     role: string;
-    img: string;
+    img: string | null;
     email: string;
     github: string;
   };
@@ -48,7 +48,7 @@ const Member = ({ member }: MemberProps) => {
           <Avatar
             size="xl"
             name={name}
-            src={img}
+            src={img ?? undefined}
             border="4px solid white"
             bg="green.500"
             color="white"

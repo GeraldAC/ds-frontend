@@ -12,20 +12,20 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 import type { Product } from "@/schemas/product.schema";
 import { Edit, Trash2 } from "lucide-react";
+import { useAverageRating } from "@/hooks/useReviewMutation";
 
 interface Props {
   product: Product;
-  averageRating: number;
   onEdit?: (product: Product) => void;
   onDelete?: (id: number) => void;
 }
 
-export const ProductCard = ({
-  product,
-  averageRating,
-  onEdit,
-  onDelete,
-}: Props) => {
+export const ProductCard = ({ product, onEdit, onDelete }: Props) => {
+  const { data, isPending } = useAverageRating(product.id);
+  const averageRating = data?.average;
+
+  const roundedRating = averageRating ? Math.round(averageRating) : 0;
+
   return (
     <Box
       borderWidth="1px"
@@ -57,12 +57,7 @@ export const ProductCard = ({
           </Heading>
 
           {product.description && (
-            <Text
-              fontSize="sm"
-              color="gray.600"
-              noOfLines={3}
-              minH="4.5rem" // Aproximadamente 3 líneas en tamaño sm
-            >
+            <Text fontSize="sm" color="gray.600" noOfLines={3} minH="4.5rem">
               {product.description}
             </Text>
           )}
@@ -72,17 +67,22 @@ export const ProductCard = ({
           </Text>
 
           <HStack spacing={1}>
+            {/* Mostrar estrellas */}
             {Array.from({ length: 5 }).map((_, i) => (
               <Icon
                 key={i}
                 as={StarIcon}
-                color={
-                  i < Math.round(averageRating) ? "yellow.400" : "gray.300"
-                }
+                color={i < roundedRating ? "yellow.400" : "gray.300"}
               />
             ))}
+
+            {/* Mostrar texto de calificación o carga */}
             <Text fontSize="sm" color="gray.500">
-              ({averageRating.toFixed(1)})
+              {isPending
+                ? "Cargando..."
+                : averageRating !== undefined
+                  ? `(${averageRating.toFixed(1)})`
+                  : "(Sin reseñas)"}
             </Text>
           </HStack>
         </Stack>

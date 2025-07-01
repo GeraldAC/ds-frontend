@@ -11,6 +11,7 @@ import type { ReviewDetail } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { ReviewDetailForm } from "./ReviewDetailForm";
+import { useNavigate } from "react-router-dom";
 
 interface ProductReviewsListProps {
   reviews: ReviewDetail[];
@@ -22,15 +23,24 @@ export const ProductReviewsList = ({
   productId,
 }: ProductReviewsListProps) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
 
-  if (!user) return null;
-
-  const userReview = reviews.find((r) => r.user_id === user.id);
-  const otherReviews = reviews.filter((r) => r.user_id !== user.id);
+  const userReview = user
+    ? reviews.find((r) => r.user_id === user.id)
+    : undefined;
+  const otherReviews = user
+    ? reviews.filter((r) => r.user_id !== user.id)
+    : reviews;
 
   const hasUserReview = !!userReview;
   const hasOtherReviews = otherReviews.length > 0;
+
+  const handleWriteReviewClick = () => {
+    if (!user) {
+      navigate("/login");
+    }
+  };
 
   return (
     <VStack align="stretch" spacing={4} mt={6}>
@@ -39,8 +49,8 @@ export const ProductReviewsList = ({
       </Heading>
       <Divider />
 
-      {/* Sección de reseña del usuario */}
-      {hasUserReview ? (
+      {/* Reseña del usuario autenticado */}
+      {user && hasUserReview ? (
         <>
           <ReviewCard review={userReview} />
           <Button size="sm" onClick={() => setEditing((e) => !e)}>
@@ -54,13 +64,19 @@ export const ProductReviewsList = ({
             />
           )}
         </>
-      ) : (
+      ) : user ? (
+        // Usuario autenticado pero no ha dejado reseña
         <ReviewDetailForm productId={productId} onSuccess={() => null} />
+      ) : (
+        // Usuario no autenticado
+        <Button size="sm" colorScheme="blue" onClick={handleWriteReviewClick}>
+          Inicia sesión para dejar una reseña
+        </Button>
       )}
 
-      {/* Sección de otras reseñas */}
       <Divider />
 
+      {/* Otras reseñas */}
       {hasOtherReviews ? (
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
           {otherReviews.map((review) => (

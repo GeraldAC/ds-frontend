@@ -20,7 +20,6 @@ export const ProductGrid = ({ products, onEdit, onDelete }: Props) => {
           <ProductCard
             key={product.id}
             product={product}
-            averageRating={3}
             onEdit={onEdit}
             onDelete={onDelete}
           />
