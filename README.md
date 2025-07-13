@@ -1,54 +1,95 @@
-# React + TypeScript + Vite
+# 🌱 Plataforma Web para la Difusión de Emprendimientos Locales - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositorio contiene el código fuente del frontend de una plataforma web desarrollada con **React**, **TypeScript** y **Vite**, orientada a la promoción de productos agropecuarios con valor agregado en el Perú. La aplicación permite a los usuarios explorar emprendimientos locales, valorar productos y, en caso de ser productores, registrar sus iniciativas para darles visibilidad digital.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Chakra UI](https://chakra-ui.com/) – Librería de componentes accesibles
+- [TanStack React Query](https://tanstack.com/query/latest) – Manejo de estados del servidor
+- [Axios](https://axios-http.com/) – Cliente HTTP
+- [Zod](https://zod.dev/) – Validación y tipado de datos
+- [React Hook Form](https://react-hook-form.com/) – Manejo eficiente de formularios
+- [Lucide React](https://lucide.dev/) – Iconografía moderna
+- [React Router DOM](https://reactrouter.com/) – Ruteo y navegación
+- ESLint + Prettier – Estilo de código y formateo automático
 
-## Expanding the ESLint configuration
+## 📦 Estructura del proyecto
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+├── components/     # Componentes reutilizables
+├── features/       # Funcionalidades agrupadas por dominio
+├── pages/          # Vistas principales
+├── services/       # Clientes API y configuración de React Query
+├── lib/            # Utilidades generales
+├── theme/          # Configuración de Chakra UI
+└── main.tsx        # Punto de entrada
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Instalación y uso
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. Clonar el repositorio
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+git clone https://github.com/GeraldAC/ds-frontend.git
+cd ds-frontend
 ```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+# o con yarn
+yarn install
+```
+
+### 3. Configurar variables de entorno
+
+Crear un archivo `.env` en la raíz del proyecto con la siguiente estructura:
+
+```
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+### 4. Iniciar la aplicación
+
+```bash
+npm run dev
+# o con yarn
+yarn dev
+```
+
+Accede a la aplicación en: [http://localhost:5173](http://localhost:5173)
+
+## ✅ Funcionalidades principales
+
+- Autenticación de usuarios
+- Visualización de productos y emprendimientos
+- Valoraciones y comentarios
+- Panel de usuario con edición de perfil
+- Conversión de usuario a productor
+- Gestión de productos y emprendimientos (CRUD)
+
+## 📂 Repositorio Backend
+
+El código del backend se encuentra en el siguiente repositorio:
+
+🔗 `ds-backend`
+
+## 🧪 Herramientas de desarrollo
+
+- Hot Module Replacement (HMR)
+- Linter y formateo automático con ESLint y Prettier
+- Validaciones en frontend y backend con Zod
+- Tipado estricto con TypeScript
+
+## 📄 Licencia
+
+Este proyecto ha sido desarrollado como parte de la asignatura _Desarrollo de Software I_.
+
+**Licencia**: MIT — puedes usar y modificar libremente con fines académicos o personales.
+
+✨ ¡Contribuciones y feedback son bienvenidos!
