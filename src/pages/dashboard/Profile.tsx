@@ -8,7 +8,6 @@ import {
   Spinner,
   Flex,
   Badge,
-  Divider,
   Grid,
   GridItem,
   HStack,
@@ -26,17 +25,16 @@ import { useNavigate } from "react-router-dom";
 import { BecomeProducerModal } from "@/features/producers/BecomeProducerModal";
 import { useProducerQuery } from "@/hooks/useProducerMutation";
 import { EditProfileModal } from "@/features/producers/EditProfileModal";
-import { 
-  User, 
-  Mail, 
-  Calendar, 
-  MapPin, 
-  Phone, 
+import {
+  User,
+  Mail,
+  Calendar,
+  MapPin,
+  Phone,
   FileText,
   Sprout,
-  Edit,
   Trash2,
-  Shield
+  Shield,
 } from "lucide-react";
 
 const DashboardProfile = () => {
@@ -95,7 +93,9 @@ const DashboardProfile = () => {
   if (isError || !userData) {
     return (
       <Box p={8}>
-        <Text color="red.500">Ocurrió un error al cargar los datos del usuario.</Text>
+        <Text color="red.500">
+          Ocurrió un error al cargar los datos del usuario.
+        </Text>
       </Box>
     );
   }
@@ -128,16 +128,16 @@ const DashboardProfile = () => {
                   borderRadius="full"
                   border="3px solid white"
                 >
-                  <Icon 
-                    as={userData.is_producer ? Sprout : User} 
-                    boxSize={4} 
-                    color="white" 
+                  <Icon
+                    as={userData.is_producer ? Sprout : User}
+                    boxSize={4}
+                    color="white"
                   />
                 </Box>
               </Box>
-              
+
               <Box flex="1" textAlign={{ base: "center", md: "left" }}>
-                <HStack 
+                <HStack
                   justify={{ base: "center", md: "flex-start" }}
                   mb={2}
                   wrap="wrap"
@@ -145,32 +145,34 @@ const DashboardProfile = () => {
                   <Heading size="lg" color="green.600">
                     {userData.name}
                   </Heading>
-                  <Badge 
+                  <Badge
                     variant={userData.is_producer ? "organic" : "earth"}
                     px={3}
                     py={1}
                     borderRadius="full"
                   >
                     <HStack spacing={1}>
-                      <Icon as={userData.is_producer ? Sprout : User} boxSize={3} />
+                      <Icon
+                        as={userData.is_producer ? Sprout : User}
+                        boxSize={3}
+                      />
                       <Text fontSize="xs">
-                        {userData.is_producer ? "Productor Verificado" : "Usuario"}
+                        {userData.is_producer
+                          ? "Productor Verificado"
+                          : "Usuario"}
                       </Text>
                     </HStack>
                   </Badge>
                 </HStack>
-                
-                <HStack 
-                  justify={{ base: "center", md: "flex-start" }}
-                  mb={3}
-                >
+
+                <HStack justify={{ base: "center", md: "flex-start" }} mb={3}>
                   <Icon as={Mail} boxSize={4} color="gray.500" />
                   <Text fontSize="md" color="gray.600">
                     {userData.email}
                   </Text>
                 </HStack>
-                
-                <HStack 
+
+                <HStack
                   justify={{ base: "center", md: "flex-start" }}
                   spacing={4}
                   wrap="wrap"
@@ -178,7 +180,8 @@ const DashboardProfile = () => {
                   <HStack>
                     <Icon as={Calendar} boxSize={4} color="gray.500" />
                     <Text fontSize="sm" color="gray.500">
-                      Miembro desde {dayjs(userData.created_at).format("MMMM YYYY")}
+                      Miembro desde{" "}
+                      {dayjs(userData.created_at).format("MMMM YYYY")}
                     </Text>
                   </HStack>
                   <HStack>
@@ -208,10 +211,12 @@ const DashboardProfile = () => {
               {isPendingProducer && (
                 <HStack justify="center">
                   <Spinner color="brown.500" />
-                  <Text color="gray.600">Cargando información del productor...</Text>
+                  <Text color="gray.600">
+                    Cargando información del productor...
+                  </Text>
                 </HStack>
               )}
-              
+
               {isErrorProducer && (
                 <Text color="red.500">
                   Error al cargar información del productor.
@@ -229,8 +234,8 @@ const DashboardProfile = () => {
                           Descripción:
                         </Text>
                       </HStack>
-                      <Text 
-                        whiteSpace="pre-wrap" 
+                      <Text
+                        whiteSpace="pre-wrap"
                         color="gray.700"
                         bg="brown.50"
                         p={4}
@@ -283,12 +288,8 @@ const DashboardProfile = () => {
             <Heading size="md" mb={4} color="gray.700">
               Acciones de Cuenta
             </Heading>
-            
-            <HStack 
-              justify="space-between" 
-              wrap="wrap" 
-              gap={4}
-            >
+
+            <HStack justify="space-between" wrap="wrap" gap={4}>
               <HStack spacing={4} wrap="wrap">
                 <EditProfileModal
                   defaultUserData={{

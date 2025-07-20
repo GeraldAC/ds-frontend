@@ -1,9 +1,9 @@
 // src/pages/index.tsx
-import { 
-  Box, 
-  Container, 
-  Heading, 
-  Text, 
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
   VStack,
   HStack,
   Button,
@@ -11,19 +11,16 @@ import {
   SimpleGrid,
   Card,
   CardBody,
-  Badge,
-  Flex,
 } from "@chakra-ui/react";
-import { ProductListView } from "@/features/products/ProductListView";
-import { 
-  Leaf, 
-  Sprout, 
-  Heart, 
+import {
+  Leaf,
+  Sprout,
+  Heart,
   MapPin,
   Users,
   Star,
   ShoppingCart,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -70,25 +67,27 @@ const IndexPage = () => {
                   bgGradient="linear(to-r, green.600, green.400)"
                   bgClip="text"
                   fontWeight="bold"
+                  py={3}
                 >
                   Cusco Orgánico
                 </Heading>
                 <Icon as={Sprout} boxSize={8} color="green.500" />
               </HStack>
-              
-              <Text
-                fontSize="xl"
-                color="gray.600"
-                maxW="3xl"
-                lineHeight="1.8"
-              >
-                Descubre productos <strong>orgánicos</strong> y <strong>sostenibles</strong> 
-                directamente de productores locales del valle sagrado de Cusco
+
+              <Text fontSize="xl" color="gray.600" maxW="3xl" lineHeight="1.8">
+                Descubre productos <strong>orgánicos</strong> y{" "}
+                <strong>sostenibles</strong> directamente de productores locales
+                del valle sagrado de Cusco
               </Text>
             </VStack>
 
             {/* Estadísticas */}
-            <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6} w="full" maxW="2xl">
+            <SimpleGrid
+              columns={{ base: 2, md: 4 }}
+              spacing={6}
+              w="full"
+              maxW="2xl"
+            >
               {[
                 { icon: Users, label: "Productores", value: "50+" },
                 { icon: Sprout, label: "Productos", value: "200+" },
@@ -114,11 +113,7 @@ const IndexPage = () => {
                 size="lg"
                 leftIcon={<ShoppingCart size={20} />}
                 onClick={() => {
-                  // Scroll hacia la sección de productos
-                  const productSection = document.getElementById('productos-section');
-                  if (productSection) {
-                    productSection.scrollIntoView({ behavior: 'smooth' });
-                  }
+                  navigate("/products");
                 }}
                 _hover={{
                   transform: "translateY(-2px)",
@@ -141,9 +136,7 @@ const IndexPage = () => {
             {/* Ubicación */}
             <HStack spacing={2} color="gray.500">
               <Icon as={MapPin} boxSize={4} />
-              <Text fontSize="sm">
-                Valle Sagrado, Cusco - Perú
-              </Text>
+              <Text fontSize="sm">Valle Sagrado, Cusco - Perú</Text>
             </HStack>
           </VStack>
         </Container>
@@ -157,25 +150,34 @@ const IndexPage = () => {
               {
                 icon: Leaf,
                 title: "100% Orgánico",
-                description: "Productos cultivados sin químicos, respetando la naturaleza",
-                color: "green"
+                description:
+                  "Productos cultivados sin químicos, respetando la naturaleza",
+                color: "green",
               },
               {
                 icon: Heart,
                 title: "Comercio Justo",
-                description: "Precios justos directamente del productor al consumidor",
-                color: "orange"
+                description:
+                  "Precios justos directamente del productor al consumidor",
+                color: "orange",
               },
               {
                 icon: Users,
                 title: "Comunidad Local",
-                description: "Apoyamos a familias productoras del valle sagrado",
-                color: "brown"
-              }
+                description:
+                  "Apoyamos a familias productoras del valle sagrado",
+                color: "brown",
+              },
             ].map((value, index) => (
               <Card
                 key={index}
-                variant={value.color === "brown" ? "earth" : value.color === "orange" ? "accent" : "organic"}
+                variant={
+                  value.color === "brown"
+                    ? "earth"
+                    : value.color === "orange"
+                      ? "accent"
+                      : "organic"
+                }
                 textAlign="center"
                 _hover={{
                   transform: "translateY(-4px)",
@@ -191,9 +193,9 @@ const IndexPage = () => {
                       borderRadius="xl"
                       display="inline-flex"
                     >
-                      <Icon 
-                        as={value.icon} 
-                        boxSize={8} 
+                      <Icon
+                        as={value.icon}
+                        boxSize={8}
                         color={`${value.color}.600`}
                       />
                     </Box>
@@ -212,26 +214,6 @@ const IndexPage = () => {
       </Box>
 
       {/* Lista de productos */}
-      <Box py={12} bg="gray.50" id="productos-section">
-        <Container maxW="6xl">
-          <VStack spacing={8}>
-            <VStack spacing={4} textAlign="center">
-              <HStack spacing={3}>
-                <Icon as={Sprout} boxSize={6} color="green.600" />
-                <Heading size="xl" color="green.600">
-                  Productos Destacados
-                </Heading>
-              </HStack>
-              <Text color="gray.600" maxW="2xl">
-                Descubre la variedad de productos orgánicos que nuestros 
-                productores locales tienen para ofrecerte
-              </Text>
-            </VStack>
-
-            <ProductListView />
-          </VStack>
-        </Container>
-      </Box>
     </Box>
   );
 };

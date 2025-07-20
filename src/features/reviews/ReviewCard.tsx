@@ -33,7 +33,7 @@ export const ReviewCard = ({ review, onEdit, onDelete }: Props) => {
     <Box bg={bg} borderRadius="xl" boxShadow="md" p={4} w="full" maxW="lg">
       <Flex gap={4} align="flex-start">
         <Image
-          src={product_image_url || "https://via.placeholder.com/80"}
+          src={product_image_url || undefined}
           alt={product_name}
           boxSize="80px"
           objectFit="cover"

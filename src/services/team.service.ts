@@ -16,7 +16,7 @@ export const members = [
   {
     name: "Gerald Antonio Cusacani Gonzales",
     role: "Desarrollador Frontend",
-    img: "https://via.placeholder.com/150",
+    img: null,
     email: "200332@unsaac.edu.pe",
     github: "https://github.com/GeraldAC",
   },

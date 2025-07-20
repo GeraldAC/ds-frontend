@@ -38,9 +38,7 @@ export const ReviewTable = ({ reviews, onEdit, onDelete }: Props) => {
           >
             <HStack align="start" spacing={4}>
               <Image
-                src={
-                  review.product_image_url || "https://via.placeholder.com/60"
-                }
+                src={review.product_image_url || "https://placehold.co/60x60"}
                 alt={review.product_name}
                 boxSize="60px"
                 objectFit="cover"
@@ -108,9 +106,7 @@ export const ReviewTable = ({ reviews, onEdit, onDelete }: Props) => {
             <Td>
               <HStack>
                 <Image
-                  src={
-                    review.product_image_url || "https://via.placeholder.com/40"
-                  }
+                  src={review.product_image_url || "https://placehold.co/40x40"}
                   alt={review.product_name}
                   boxSize="40px"
                   objectFit="cover"

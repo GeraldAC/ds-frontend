@@ -25,31 +25,33 @@ const UserMenu = () => {
   if (!user) return null;
 
   const isInDashboard = location.pathname.startsWith("/dashboard");
-  const menuTarget = isInDashboard ? "/" : "/dashboard";
+  const menuTarget = isInDashboard ? "/products" : "/dashboard";
   const menuLabel = isInDashboard ? "Ver tienda" : "Panel de control";
   const menuIcon = isInDashboard ? (
-    <Store size={16} />
+    <Store size={18} />
   ) : (
-    <LayoutDashboard size={16} />
+    <LayoutDashboard size={18} />
   );
 
   return (
     <Menu>
       <MenuButton
         as={Button}
-        rounded="xl"
+        rounded="2xl"
         variant="ghost"
         cursor="pointer"
         minW={0}
         rightIcon={<ChevronDownIcon />}
         aria-label="Opciones de usuario"
+        px={3}
+        py={2}
         _hover={{
           bg: "green.50",
           transform: "translateY(-1px)",
         }}
         transition="all 0.2s ease"
       >
-        <HStack spacing={3}>
+        <HStack spacing={2}>
           <Avatar
             size="sm"
             name={user.name}
@@ -59,41 +61,44 @@ const UserMenu = () => {
             border="2px solid"
             borderColor="green.100"
           />
-          <Text 
-            fontSize="sm" 
+          <Text
+            fontSize="sm"
             fontWeight="medium"
-            display={{ base: "none", md: "block" }}
             color="gray.700"
+            display={{ base: "none", md: "block" }}
           >
-            {user.name.split(' ')[0]}
+            {user.name.split(" ")[0]}
           </Text>
         </HStack>
       </MenuButton>
 
       <MenuList
+        border="2px solid"
         borderColor="green.100"
-        borderWidth="2px"
         borderRadius="xl"
+        boxShadow="lg"
         py={2}
-        minW="240px"
+        px={1}
+        minW="260px"
+        bg="white"
       >
-        {/* Header del menu */}
+        {/* Header del menú */}
         <Box px={4} py={3}>
           <VStack align="start" spacing={1}>
-            <HStack spacing={2}>
-              <Text fontWeight="bold" color="gray.800">
+            <HStack spacing={12}>
+              <Text fontWeight="bold" color="gray.800" fontSize="sm">
                 {user.name}
               </Text>
               {user.is_producer && (
-                <Badge size="sm" variant="organic">
+                <Badge variant="subtle" colorScheme="orange" rounded="md">
                   <HStack spacing={1}>
-                    <Leaf size={10} />
+                    <Leaf size={12} />
                     <Text fontSize="xs">Productor</Text>
                   </HStack>
                 </Badge>
               )}
             </HStack>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="xs" color="gray.500">
               {user.email}
             </Text>
           </VStack>
@@ -103,11 +108,13 @@ const UserMenu = () => {
 
         {/* Opciones principales */}
         <MenuItem
-          icon={<User size={16} />}
+          icon={<User size={18} />}
           onClick={() => navigate("/dashboard/profile")}
+          py={2.5}
+          px={4}
+          fontSize="sm"
           color="gray.700"
           _hover={{ bg: "green.50", color: "green.700" }}
-          py={3}
         >
           Mi perfil
         </MenuItem>
@@ -115,10 +122,12 @@ const UserMenu = () => {
         <MenuItem
           icon={menuIcon}
           onClick={() => navigate(menuTarget)}
+          py={2.5}
+          px={4}
+          fontSize="sm"
           color="green.600"
-          _hover={{ bg: "green.50", color: "green.700" }}
-          py={3}
           fontWeight="medium"
+          _hover={{ bg: "green.50", color: "green.700" }}
         >
           {menuLabel}
         </MenuItem>
@@ -126,12 +135,14 @@ const UserMenu = () => {
         <MenuDivider borderColor="green.100" />
 
         {/* Logout */}
-        <MenuItem 
-          icon={<LogOut size={16} />} 
-          onClick={logout} 
+        <MenuItem
+          icon={<LogOut size={18} />}
+          onClick={logout}
+          py={2.5}
+          px={4}
+          fontSize="sm"
           color="red.500"
           _hover={{ bg: "red.50", color: "red.600" }}
-          py={3}
         >
           Cerrar sesión
         </MenuItem>

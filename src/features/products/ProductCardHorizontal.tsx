@@ -8,6 +8,7 @@ import {
   HStack,
   Button,
   Stack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { type FC } from "react";
@@ -23,6 +24,7 @@ export const ProductCardHorizontal: FC<ProductCardHorizontalProps> = ({
   product,
   onViewDetails,
 }) => {
+  const hoverShadow = useColorModeValue("xl", "dark-lg");
   const { data, isPending } = useAverageRating(product.id);
   const averageRating = data?.average;
 
@@ -32,10 +34,14 @@ export const ProductCardHorizontal: FC<ProductCardHorizontalProps> = ({
       borderRadius="2xl"
       overflow="hidden"
       boxShadow="md"
-      _hover={{ boxShadow: "lg" }}
       bg="white"
       w="100%"
       direction={{ base: "column", md: "row" }}
+      transition="all 0.3s ease"
+      _hover={{
+        transform: "translateY(-3px)",
+        boxShadow: hoverShadow,
+      }}
     >
       {/* Imagen del producto */}
       {product.image_url && (

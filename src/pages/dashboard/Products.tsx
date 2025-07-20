@@ -29,15 +29,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams, Link as RouterLink } from "react-router-dom";
-import { 
-  Apple, 
-  Plus, 
-  Package, 
-  ArrowLeft,
-  Leaf,
-  ShoppingCart,
-  BarChart3
-} from "lucide-react";
+import { Apple, Plus, Package, ArrowLeft, Leaf, BarChart3 } from "lucide-react";
 
 const Products = () => {
   const { ventureId } = useParams<{ ventureId: string }>();
@@ -112,7 +104,9 @@ const Products = () => {
   if (isVentureError || isProductsError) {
     return (
       <Container maxW="6xl" py={8}>
-        <Text color="red.500">Error al cargar los datos del emprendimiento.</Text>
+        <Text color="red.500">
+          Error al cargar los datos del emprendimiento.
+        </Text>
       </Container>
     );
   }
@@ -159,7 +153,7 @@ const Products = () => {
               >
                 <Icon as={Leaf} boxSize={8} color="green.600" />
               </Box>
-              
+
               <Box flex="1">
                 <Heading size="xl" color="green.600" mb={2}>
                   {venture.name}
@@ -183,8 +177,8 @@ const Products = () => {
         {/* Header de productos */}
         <Card>
           <CardBody>
-            <Flex 
-              justify="space-between" 
+            <Flex
+              justify="space-between"
               align={{ base: "flex-start", md: "center" }}
               direction={{ base: "column", md: "row" }}
               gap={4}
@@ -200,8 +194,8 @@ const Products = () => {
                   Gestiona el catálogo de productos de tu emprendimiento
                 </Text>
               </Box>
-              
-              <Button 
+
+              <Button
                 leftIcon={<Plus size={20} />}
                 variant="accent"
                 onClick={handleNewProduct}
@@ -272,10 +266,10 @@ const Products = () => {
                     No hay productos aún
                   </Heading>
                   <Text color="gray.500" maxW="md">
-                    Agrega productos orgánicos a tu emprendimiento para que 
-                    los clientes puedan conocer y adquirir tus productos.
+                    Agrega productos orgánicos a tu emprendimiento para que los
+                    clientes puedan conocer y adquirir tus productos.
                   </Text>
-                  <Button 
+                  <Button
                     leftIcon={<Plus size={20} />}
                     variant="accent"
                     onClick={handleNewProduct}

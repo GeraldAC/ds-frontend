@@ -9,16 +9,7 @@ export type NavItem = {
 };
 
 // Importar iconos más relevantes para agricultura
-import { 
-  Home, 
-  User, 
-  Star, 
-  Store, 
-  Package,
-  Sprout,
-  Wheat,
-  Apple
-} from "lucide-react";
+import { Home, User, Star, Sprout, Apple } from "lucide-react";
 
 export const navItems: NavItem[] = [
   {

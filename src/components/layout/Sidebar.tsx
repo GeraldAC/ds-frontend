@@ -14,10 +14,10 @@ import { SIDEBAR_WIDTH } from "@/layouts/DashboardLayout";
 
 export const Sidebar = () => {
   const { isCollapsed, toggleSidebar } = useSidebar();
-  const bgColor = useColorModeValue("green.700", "green.800");
+  // const bgColor = useColorModeValue("green.700", "green.800");
   const bgGradient = useColorModeValue(
     "linear(to-b, green.700, green.800)",
-    "linear(to-b, green.800, green.900)"
+    "linear(to-b, green.800, green.900)",
   );
 
   return (
@@ -68,7 +68,7 @@ export const Sidebar = () => {
               </Box>
             </Flex>
           )}
-          
+
           <IconButton
             aria-label={
               isCollapsed ? "Expandir menú lateral" : "Colapsar menú lateral"
@@ -90,10 +90,10 @@ export const Sidebar = () => {
         {/* Panel de control title (solo cuando expandido) */}
         {!isCollapsed && (
           <Box px={2}>
-            <Text 
-              fontSize="xs" 
-              fontWeight="semibold" 
-              textTransform="uppercase" 
+            <Text
+              fontSize="xs"
+              fontWeight="semibold"
+              textTransform="uppercase"
               letterSpacing="wider"
               opacity={0.8}
               mb={2}
@@ -110,12 +110,7 @@ export const Sidebar = () => {
         {!isCollapsed && (
           <Box mt="auto" px={2} py={3}>
             <Divider borderColor="green.500" opacity={0.6} mb={3} />
-            <Box
-              bg="green.600"
-              borderRadius="lg"
-              p={3}
-              textAlign="center"
-            >
+            <Box bg="green.600" borderRadius="lg" p={3} textAlign="center">
               <Text fontSize="xs" fontWeight="semibold" mb={1}>
                 Cusco Orgánico
               </Text>

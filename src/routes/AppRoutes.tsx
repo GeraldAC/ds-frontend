@@ -4,11 +4,13 @@ import { PrivateRoute } from "./PrivateRoute";
 
 import MainLayout from "@/layouts/MainLayout";
 
-import IndexPage from "@/pages/Index";
+import IndexPage from "@/pages/index";
 import AboutPage from "@/pages/About";
+import ProductsPage from "@/pages/products";
+import VenturePage from "@/pages/venture";
 
-import { LoginPage } from "@/pages/Login";
-import { RegisterPage } from "@/pages/Register";
+import { LoginPage } from "@/pages/login";
+import { RegisterPage } from "@/pages/register";
 
 import Home from "@/pages/dashboard/Index";
 import Profile from "@/pages/dashboard/Profile";
@@ -25,6 +27,8 @@ const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route path="/" element={<IndexPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/ventures/:ventureId/products" element={<VenturePage />} />
       </Route>
 
       {/* Rutas públicas */}

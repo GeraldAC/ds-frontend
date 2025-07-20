@@ -10,20 +10,19 @@ import {
   CardHeader,
   HStack,
   Badge,
-  Flex,
   Icon,
 } from "@chakra-ui/react";
 import Member from "@/components/ui/Member";
 import { members } from "@/services/team.service";
-import { 
-  Leaf, 
-  Target, 
-  Users, 
+import {
+  Leaf,
+  Target,
+  Users,
   Heart,
   Sprout,
   Globe,
   Handshake,
-  Recycle
+  Recycle,
 } from "lucide-react";
 
 const AboutPage = () => {
@@ -35,26 +34,28 @@ const AboutPage = () => {
           <Box textAlign="center" mb={8}>
             <HStack justify="center" mb={4}>
               <Leaf size={32} color="#4CAF50" />
-              <Heading 
-                size="2xl" 
-                fontWeight="bold" 
+              <Heading
+                size="2xl"
+                fontWeight="bold"
                 bgGradient="linear(to-r, green.600, green.400)"
                 bgClip="text"
+                py={3}
               >
                 Cusco Orgánico
               </Heading>
               <Sprout size={32} color="#4CAF50" />
             </HStack>
-            <Text 
-              fontSize="xl" 
-              color="gray.600" 
-              maxW="4xl" 
+            <Text
+              fontSize="xl"
+              color="gray.600"
+              maxW="4xl"
               mx="auto"
               lineHeight="1.8"
             >
-              Conectamos a productores locales con clientes a través de una plataforma 
-              digital <strong>gratuita</strong>, <strong>accesible</strong> y diseñada 
-              para impulsar el <strong>desarrollo rural sostenible</strong>.
+              Conectamos a productores locales con clientes a través de una
+              plataforma digital <strong>gratuita</strong>,{" "}
+              <strong>accesible</strong> y diseñada para impulsar el{" "}
+              <strong>desarrollo rural sostenible</strong>.
             </Text>
           </Box>
 
@@ -64,31 +65,40 @@ const AboutPage = () => {
               {
                 icon: Globe,
                 title: "Sostenible",
-                description: "Productos orgánicos que respetan el medio ambiente",
-                color: "green"
+                description:
+                  "Productos orgánicos que respetan el medio ambiente",
+                color: "green",
               },
               {
                 icon: Handshake,
                 title: "Comercio Justo",
                 description: "Precios justos directamente del productor",
-                color: "brown"
+                color: "brown",
               },
               {
                 icon: Heart,
                 title: "Comunidad",
-                description: "Fortalecemos vínculos entre productores y clientes",
-                color: "orange"
+                description:
+                  "Fortalecemos vínculos entre productores y clientes",
+                color: "orange",
               },
               {
                 icon: Recycle,
                 title: "Local",
-                description: "Promovemos la economía circular del valle sagrado",
-                color: "green"
-              }
+                description:
+                  "Promovemos la economía circular del valle sagrado",
+                color: "green",
+              },
             ].map((value, index) => (
-              <Card 
+              <Card
                 key={index}
-                variant={value.color === "brown" ? "earth" : value.color === "orange" ? "accent" : "organic"}
+                variant={
+                  value.color === "brown"
+                    ? "earth"
+                    : value.color === "orange"
+                      ? "accent"
+                      : "organic"
+                }
                 textAlign="center"
                 p={4}
                 _hover={{
@@ -105,9 +115,9 @@ const AboutPage = () => {
                       borderRadius="xl"
                       display="inline-flex"
                     >
-                      <Icon 
-                        as={value.icon} 
-                        boxSize={8} 
+                      <Icon
+                        as={value.icon}
+                        boxSize={8}
                         color={`${value.color}.600`}
                       />
                     </Box>
@@ -144,41 +154,61 @@ const AboutPage = () => {
             </CardHeader>
             <CardBody>
               <VStack spacing={6}>
-                <Text 
-                  fontSize="lg" 
-                  textAlign="center" 
-                  maxW="5xl" 
+                <Text
+                  fontSize="lg"
+                  textAlign="center"
+                  maxW="5xl"
                   mx="auto"
                   lineHeight="1.8"
                   color="gray.700"
                 >
-                  Impulsar la <strong>economía agronómica local</strong> del valle sagrado 
-                  de Cusco, conectando directamente a emprendedores rurales con potenciales 
-                  clientes mediante una plataforma digital intuitiva y completamente gratuita.
+                  Impulsar la <strong>economía agronómica local</strong> del
+                  valle sagrado de Cusco, conectando directamente a
+                  emprendedores rurales con potenciales clientes mediante una
+                  plataforma digital intuitiva y completamente gratuita.
                 </Text>
-                
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8} w="full" mt={8}>
+
+                <SimpleGrid
+                  columns={{ base: 1, md: 2 }}
+                  spacing={8}
+                  w="full"
+                  mt={8}
+                >
                   <Box>
                     <Heading size="md" color="green.600" mb={3}>
                       🌱 Lo que buscamos
                     </Heading>
                     <VStack align="start" spacing={2}>
-                      <Text fontSize="sm">• Digitalizar pequeños productores</Text>
-                      <Text fontSize="sm">• Facilitar difusión de productos orgánicos</Text>
-                      <Text fontSize="sm">• Fomentar confianza del consumidor</Text>
-                      <Text fontSize="sm">• Construir redes de comercio sostenible</Text>
+                      <Text fontSize="sm">
+                        • Digitalizar pequeños productores
+                      </Text>
+                      <Text fontSize="sm">
+                        • Facilitar difusión de productos orgánicos
+                      </Text>
+                      <Text fontSize="sm">
+                        • Fomentar confianza del consumidor
+                      </Text>
+                      <Text fontSize="sm">
+                        • Construir redes de comercio sostenible
+                      </Text>
                     </VStack>
                   </Box>
-                  
+
                   <Box>
                     <Heading size="md" color="brown.600" mb={3}>
                       🎯 Nuestro impacto
                     </Heading>
                     <VStack align="start" spacing={2}>
-                      <Text fontSize="sm">• Acceso directo a mercados locales</Text>
+                      <Text fontSize="sm">
+                        • Acceso directo a mercados locales
+                      </Text>
                       <Text fontSize="sm">• Eliminación de intermediarios</Text>
-                      <Text fontSize="sm">• Fortalecimiento de la economía rural</Text>
-                      <Text fontSize="sm">• Preservación de tradiciones agrícolas</Text>
+                      <Text fontSize="sm">
+                        • Fortalecimiento de la economía rural
+                      </Text>
+                      <Text fontSize="sm">
+                        • Preservación de tradiciones agrícolas
+                      </Text>
                     </VStack>
                   </Box>
                 </SimpleGrid>
@@ -192,20 +222,21 @@ const AboutPage = () => {
               <Box textAlign="center">
                 <HStack justify="center" mb={4}>
                   <Users size={24} color="#4CAF50" />
-                  <Heading
-                    size="xl"
-                    variant="organic"
-                  >
+                  <Heading size="xl" variant="organic">
                     Nuestro Equipo
                   </Heading>
                 </HStack>
                 <Text color="gray.600" maxW="2xl" mx="auto">
-                  Un grupo comprometido con el desarrollo sostenible y la tecnología 
-                  al servicio de nuestras comunidades rurales.
+                  Un grupo comprometido con el desarrollo sostenible y la
+                  tecnología al servicio de nuestras comunidades rurales.
                 </Text>
               </Box>
-              
-              <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w="full">
+
+              <SimpleGrid
+                columns={{ base: 1, md: 2, lg: 3 }}
+                spacing={10}
+                w="full"
+              >
                 {members.map((member, index) => (
                   <Member key={index} member={member} />
                 ))}
@@ -231,8 +262,9 @@ const AboutPage = () => {
                   ¿Eres productor del valle sagrado?
                 </Heading>
                 <Text fontSize="md" color="gray.700" maxW="2xl">
-                  Únete a nuestra plataforma completamente gratuita y comienza 
-                  a conectar con clientes que valoran productos orgánicos y de calidad.
+                  Únete a nuestra plataforma completamente gratuita y comienza a
+                  conectar con clientes que valoran productos orgánicos y de
+                  calidad.
                 </Text>
                 <HStack spacing={4} wrap="wrap" justify="center">
                   <Badge variant="accent" px={3} py={1} borderRadius="full">

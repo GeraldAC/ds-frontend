@@ -10,13 +10,13 @@ import {
   InputLeftElement,
   Icon,
 } from "@chakra-ui/react";
-import { ProductCardHorizontal } from "./ProductCardHorizontal";
 import { useMemo, useState } from "react";
-import { useProductsQuery } from "@/hooks/useProductMutation";
-import type { Product } from "@/schemas/product.schema";
-import { ProductDetailsModal } from "../home/ProductDetailsModal";
-import queryClient from "@/lib/queryClient";
 import { SearchIcon } from "lucide-react";
+import queryClient from "@/lib/queryClient";
+import { useProductsQuery } from "@/hooks/useProductMutation";
+import { ProductCardHorizontal } from "./ProductCardHorizontal";
+import { ProductDetailsModal } from "../home/ProductDetailsModal";
+import type { Product } from "@/schemas/product.schema";
 
 export const ProductListView = () => {
   const toast = useToast();
@@ -79,8 +79,8 @@ export const ProductListView = () => {
             borderRadius="full"
             boxShadow="md"
             _focus={{
-              borderColor: "teal.800",
-              boxShadow: "0 0 0 2px rgba(56, 178, 172, 0.4)",
+              borderColor: "green.800",
+              boxShadow: "0 0 0 2px rgba(16, 157, 25, 0.75)",
             }}
             _placeholder={{ color: "gray.400" }}
           />

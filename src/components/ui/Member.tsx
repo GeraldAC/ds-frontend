@@ -55,13 +55,13 @@ const Member = ({ member }: MemberProps) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Image 
-            h="60px" 
-            w="auto" 
-            src={logoInfo} 
+          <Image
+            h="95px"
+            w="auto"
+            src={logoInfo}
             objectFit="contain"
-            filter="brightness(0) invert(1)"
-            opacity={0.3}
+            opacity={0.9}
+            rounded={"lg"}
           />
         </Box>
 
@@ -85,10 +85,10 @@ const Member = ({ member }: MemberProps) => {
               <Heading fontSize="xl" fontWeight="bold" color="green.600" mb={1}>
                 {name}
               </Heading>
-              <Badge 
-                variant="organic" 
-                px={3} 
-                py={1} 
+              <Badge
+                variant="organic"
+                px={3}
+                py={1}
                 borderRadius="full"
                 fontSize="xs"
               >
@@ -105,14 +105,14 @@ const Member = ({ member }: MemberProps) => {
                 </Text>
               </HStack>
 
-              <Link 
-                href={github} 
-                target="_blank" 
+              <Link
+                href={github}
+                target="_blank"
                 rel="noopener noreferrer"
                 _hover={{ textDecoration: "none" }}
               >
-                <HStack 
-                  spacing={2} 
+                <HStack
+                  spacing={2}
                   color="gray.600"
                   _hover={{ color: "green.600" }}
                   transition="color 0.2s"

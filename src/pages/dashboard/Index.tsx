@@ -3,14 +3,12 @@ import {
   Text,
   Heading,
   Avatar,
-  Stack,
   SimpleGrid,
   useColorModeValue,
   Spinner,
   Alert,
   AlertIcon,
   Card,
-  CardHeader,
   CardBody,
   HStack,
   Icon,
@@ -24,16 +22,8 @@ import { useMyReviewsQuery } from "@/hooks/useReviewMutation";
 import { useProductsByVentures } from "@/hooks/useProductMutation";
 import { UserStatsChart } from "@/features/home/UserStatsChart";
 import { ReviewBreakdownChart } from "@/features/home/ReviewBreakdownChart";
-import { 
-  Sprout, 
-  Package, 
-  Star, 
-  Users, 
-  TrendingUp,
-  Sun,
-  Leaf,
-  Heart
-} from "lucide-react";
+import { Sprout, Package, Star, Users, Sun, Leaf, Heart } from "lucide-react";
+import { unknown } from "zod";
 
 const Home = () => {
   const { user } = useAuth();
@@ -88,11 +78,11 @@ const Home = () => {
   const getMemberSince = () => {
     try {
       // Usar any para evitar errores de TypeScript si la propiedad no existe en el tipo
-      const userWithDate = user as any;
-      
+      const userWithDate = { ...user, created_at: unknown };
+
       if (userWithDate?.created_at) {
         // Si created_at es una string
-        if (typeof userWithDate.created_at === 'string') {
+        if (typeof userWithDate.created_at === "string") {
           return new Date(userWithDate.created_at).getFullYear();
         }
         // Si created_at es un objeto Date
@@ -103,7 +93,7 @@ const Home = () => {
       // Fallback al año actual si no hay fecha
       return new Date().getFullYear();
     } catch (error) {
-      console.warn('Error parsing created_at date:', error);
+      console.warn("Error parsing created_at date:", error);
       return new Date().getFullYear();
     }
   };
@@ -133,8 +123,8 @@ const Home = () => {
       {/* Header con saludo personalizado */}
       <Card variant="organic" mb={8}>
         <CardBody>
-          <Flex 
-            direction={{ base: "column", md: "row" }} 
+          <Flex
+            direction={{ base: "column", md: "row" }}
             align={{ base: "center", md: "flex-start" }}
             gap={6}
           >
@@ -146,23 +136,20 @@ const Home = () => {
               borderColor="green.100"
             />
             <Box flex="1" textAlign={{ base: "center", md: "left" }}>
-              <HStack 
-                justify={{ base: "center", md: "flex-start" }} 
-                mb={2}
-              >
+              <HStack justify={{ base: "center", md: "flex-start" }} mb={2}>
                 <Icon as={getGreetingIcon()} color="green.500" boxSize={6} />
                 <Heading size="lg" color="green.600">
                   {getGreeting()}, {user?.name}!
                 </Heading>
               </HStack>
-              
+
               <Text fontSize="md" color="gray.600" mb={3}>
                 {user?.is_producer
                   ? "Aquí tienes el resumen de tu actividad como productor orgánico"
                   : "Bienvenido a tu panel de usuario de Cusco Orgánico"}
               </Text>
 
-              <HStack 
+              <HStack
                 justify={{ base: "center", md: "flex-start" }}
                 spacing={3}
                 wrap="wrap"
@@ -178,9 +165,7 @@ const Home = () => {
                 <Badge variant="earth" px={3} py={1} borderRadius="full">
                   <HStack spacing={1}>
                     <Heart size={12} />
-                    <Text fontSize="xs">
-                      Miembro desde {getMemberSince()}
-                    </Text>
+                    <Text fontSize="xs">Miembro desde {getMemberSince()}</Text>
                   </HStack>
                 </Badge>
               </HStack>
@@ -190,7 +175,11 @@ const Home = () => {
       </Card>
 
       {/* Grid de estadísticas */}
-      <SimpleGrid columns={{ base: 1, md: 2, lg: user?.is_producer ? 3 : 2 }} spacing={6} mb={8}>
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: user?.is_producer ? 3 : 2 }}
+        spacing={6}
+        mb={8}
+      >
         {user?.is_producer && (
           <SummaryCard
             title="Emprendimientos"
@@ -200,7 +189,7 @@ const Home = () => {
             description="Proyectos activos"
           />
         )}
-        
+
         {user?.is_producer && (
           <SummaryCard
             title="Productos"
@@ -210,7 +199,7 @@ const Home = () => {
             description="En catálogo"
           />
         )}
-        
+
         <SummaryCard
           title="Reseñas"
           value={reviews?.length || 0}
@@ -218,7 +207,7 @@ const Home = () => {
           color="orange"
           description={user?.is_producer ? "Recibidas" : "Realizadas"}
         />
-        
+
         {!user?.is_producer && (
           <SummaryCard
             title="Interacciones"
@@ -253,12 +242,21 @@ interface SummaryCardProps {
   description: string;
 }
 
-const SummaryCard = ({ title, value, icon, color, description }: SummaryCardProps) => {
-  const colorScheme = color === "brown" ? "brown" : color === "orange" ? "orange" : "green";
-  
+const SummaryCard = ({
+  title,
+  value,
+  icon,
+  color,
+  description,
+}: SummaryCardProps) => {
+  const colorScheme =
+    color === "brown" ? "brown" : color === "orange" ? "orange" : "green";
+
   return (
-    <Card 
-      variant={color === "brown" ? "earth" : color === "orange" ? "accent" : "organic"}
+    <Card
+      variant={
+        color === "brown" ? "earth" : color === "orange" ? "accent" : "organic"
+      }
       _hover={{
         transform: "translateY(-4px)",
         boxShadow: "xl",
@@ -277,7 +275,7 @@ const SummaryCard = ({ title, value, icon, color, description }: SummaryCardProp
           >
             <Icon as={icon} boxSize={6} color={`${colorScheme}.600`} />
           </Box>
-          
+
           <Box flex="1">
             <Text fontSize="sm" color="gray.600" fontWeight="medium">
               {title}
