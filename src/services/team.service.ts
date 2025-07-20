@@ -1,14 +1,14 @@
 export const members = [
   {
     name: "George Adolfo Conde Padin",
-    role: "Arquitecto de Base de Datos",
+    role: "Diseñador UI/UX",
     img: null,
     email: "141664@unsaac.edu.pe",
     github: "https://github.com/GeorgeConde",
   },
   {
     name: "Rossbel Huaylla Huillca",
-    role: "Diseñador UI/UX",
+    role: "Desarrollador Backend y DevOps",
     img: null,
     email: "183067@unsaac.edu.pe",
     github: "https://github.com/pocotu",
